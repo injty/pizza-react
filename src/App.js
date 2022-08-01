@@ -6,6 +6,8 @@ import { Categories } from './components/Categories'
 import { PizzaBlock } from './components/PizzaBlock'
 import { Testovij } from './components/Testovij'
 
+import pizzas from './assets/pizzas.json'
+
 import './scss/app.scss'
 
 
@@ -30,8 +32,15 @@ export default function App() {
           <h2 className="content__title">Все пиццы</h2>
 
           <div className="content__items">
-            <PizzaBlock title='Meksikanskaya' price={345} />
-            <PizzaBlock title='Italianskaya' price={333} />
+            {
+              pizzas.map(obj =>
+                <PizzaBlock
+                  name={obj.name}
+
+
+                />
+              )
+            }
           </div>
 
         </div>
