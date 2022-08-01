@@ -10,10 +10,6 @@ import pizzas from './assets/pizzas.json'
 
 import './scss/app.scss'
 
-
-
-
-
 export default function App() {
   return (
 
@@ -35,9 +31,7 @@ export default function App() {
             {
               pizzas.map(obj =>
                 <PizzaBlock
-                  name={obj.name}
-
-
+                  {...obj}
                 />
               )
             }

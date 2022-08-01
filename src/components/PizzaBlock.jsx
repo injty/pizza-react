@@ -1,34 +1,57 @@
 import React, { useState } from 'react'
 
-export function PizzaBlock({ name, price,
-  id
+export function PizzaBlock({
+  imageUrl,
+  name,
+  types,
+  sizes,
+  price
 }) {
-
   // pizza counter 
   const [pizzaCounter, setPizzaCounter] = useState(0)
   const onClickCounterChange = () => {
     setPizzaCounter(pizzaCounter + 1)
   }
 
+  // types
+  const typeNames = ["тонкое", "традиционное"];
+  const [activeType, setActiveType] = React.useState(0)
+
+  // sizes
+  const [activeSize, setActiveSize] = React.useState(0)
 
   return (
-
     <div className="pizza-block">
       <img
         className="pizza-block__image"
-        src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
+        src={imageUrl}
         alt="Pizza"
       />
       <h4 className="pizza-block__title">{name}</h4>
       <div className="pizza-block__selector">
         <ul>
-          <li className="active">тонкое</li>
-          <li>традиционное</li>
+          {
+            types.map(type =>
+              <li
+                className={
+                  types.length < 2 || activeType === type ? 'active' : ''
+                }
+                onClick={() => setActiveType(type)}
+              >{typeNames[type]}</li>
+            )
+          }
         </ul>
         <ul>
-          <li className="active">26 см.</li>
-          <li>30 см.</li>
-          <li>40 см.</li>
+          {
+            sizes.map((size, i) =>
+              <li
+                className={
+                  activeSize === i ? 'active' : ''
+                }
+                onClick={() => setActiveSize(i)}
+              >{size} sm.</li>
+            )
+          }
         </ul>
       </div>
       <div className="pizza-block__bottom">
