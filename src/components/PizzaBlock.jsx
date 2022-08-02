@@ -31,8 +31,9 @@ export function PizzaBlock({
       <div className="pizza-block__selector">
         <ul>
           {
-            types.map(type =>
+            types.map((type) =>
               <li
+                key={type}
                 className={
                   types.length < 2 || activeType === type ? 'active' : ''
                 }
@@ -45,6 +46,7 @@ export function PizzaBlock({
           {
             sizes.map((size, i) =>
               <li
+                key={size}
                 className={
                   activeSize === i ? 'active' : ''
                 }

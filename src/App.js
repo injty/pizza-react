@@ -21,7 +21,7 @@ export default function App() {
         <div className="container">
           <div className="content__top">
 
-            <Categories />
+            {/* <Categories /> */}
             <Sort />
 
           </div>
@@ -31,6 +31,7 @@ export default function App() {
             {
               pizzas.map(obj =>
                 <PizzaBlock
+                  key={obj.id}
                   {...obj}
                 />
               )

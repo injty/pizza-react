@@ -21,6 +21,7 @@ export function Categories() {
         {
           categories.map((category, index) =>
             <li
+              key={index}
               className={
                 categoryIndex === index ? "active" : ""
               }
