@@ -6,13 +6,14 @@ import { Categories } from './components/Categories'
 import { PizzaBlock } from './components/PizzaBlock'
 import { Testovij } from './components/Testovij'
 
-import pizzas from './assets/pizzas.json'
-
 import './scss/app.scss'
 
-export default function App() {
-  return (
+const pizzas = []
 
+export default function App() {
+  // https://62ea2bcaad295463258626d6.mockapi.io/pizzas  
+
+  return (
     <div className="wrapper">
       <Testovij />
 
@@ -20,13 +21,10 @@ export default function App() {
       <div className="content">
         <div className="container">
           <div className="content__top">
-
             {/* <Categories /> */}
             <Sort />
-
           </div>
           <h2 className="content__title">Все пиццы</h2>
-
           <div className="content__items">
             {
               pizzas.map(obj =>
@@ -37,10 +35,8 @@ export default function App() {
               )
             }
           </div>
-
         </div>
       </div>
     </div>
-
   )
 }

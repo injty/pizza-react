@@ -2,7 +2,7 @@ import React from 'react'
 
 export function Sort() {
   // sort toggle
-  const [open, setOpen] = React.useState(true)
+  const [open, setOpen] = React.useState(false)
 
   // sort popup
   const sortCategoryList = [
@@ -18,7 +18,6 @@ export function Sort() {
     setOpen(false)
   }
   const sortCategoryName = sortCategoryList[sort]
-
 
   return (
     <div className="sort">
