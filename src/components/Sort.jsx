@@ -46,6 +46,7 @@ export function Sort() {
             {
               sortCategoryList.map((sortCategory, index) =>
                 <li
+                  key={sortCategory}
                   className={sort === index ? 'active' : ''}
                   onClick={() => selectSortItem(index)}
                 >

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Header from './components/Header'
 import { Sort } from './components/Sort'
@@ -8,10 +8,16 @@ import { Testovij } from './components/Testovij'
 
 import './scss/app.scss'
 
-const pizzas = []
 
 export default function App() {
-  // https://62ea2bcaad295463258626d6.mockapi.io/pizzas  
+  const [items, setItems] = useState([])
+
+  useEffect(() => {
+    fetch("https://62ea2bcaad295463258626d6.mockapi.io/pizzas")
+      .then((res) => res.json())
+      .then((data) => setItems(data))
+  }, [])
+
 
   return (
     <div className="wrapper">
@@ -21,13 +27,13 @@ export default function App() {
       <div className="content">
         <div className="container">
           <div className="content__top">
-            {/* <Categories /> */}
+            <Categories />
             <Sort />
           </div>
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
             {
-              pizzas.map(obj =>
+              items.map(obj =>
                 <PizzaBlock
                   key={obj.id}
                   {...obj}
