@@ -10,28 +10,34 @@ export default function Home() {
 	const [items, setItems] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
 
-	// category
-	const [categoryIndex, setCategoryIndex] = React.useState(0)
+	// sort
+	const [categoryIndex, setCategoryIndex] = useState(0);
+	const [sortType, setSortType] = useState({
+		name: 'популярности (desc)',
+		sort: 'rating'
+	})
 
 	useEffect(() => {
 		setIsLoading(true);
 
-		const category = categoryIndex > 0 ? `category=${categoryIndex}&order=desc` : '';
+		const category = categoryIndex > 0 ? `category=${categoryIndex}` : '';
+		const sorted = `&sortBy=${sortType.sort.replace("-", "")}`;
+		const order = `&order=${sortType.sort.includes('-') ? 'asc' : 'desc'}`;
 
-		fetch(`https://62ea2bcaad295463258626d6.mockapi.io/pizzas?${category}`)
+		fetch(`https://62ea2bcaad295463258626d6.mockapi.io/pizzas?${category}${sorted}${order}`)
 			.then((res) => res.json())
 			.then((data) => {
 				setItems(data);
 				setIsLoading(false)
 			});
 		window.scrollTo(0, 0);
-	}, [categoryIndex]);
+	}, [categoryIndex, sortType]);
 
 	return (
 		<div className='container'>
 			<div className="content__top">
 				<Categories value={categoryIndex} onChangeCategory={(index) => setCategoryIndex(index)} />
-				<Sort />
+				<Sort value={sortType.name} onSelectedSort={(obj) => setSortType(obj)} />
 			</div>
 			<h2 className="content__title">Все пиццы</h2>
 			<div className="content__items">
