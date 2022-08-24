@@ -1,0 +1,38 @@
+.root {
+	position: relative;
+}
+
+.input {
+	padding: 12px 30px;
+	width: 280px;
+	border: 1px solid rgb(23 32 42 / 12%);
+	border-radius: 8px;
+	transition: width 150ms ease-in-out, border 150ms ease-in-out, box-shadow 250ms ease-in-out;
+
+	&:focus {
+		box-shadow: rgba(23 32 32 / 32%) 5px 5px;
+		border: 1px solid rgb(23 32 32 / 44%);
+	}
+}
+
+.searchIcon,
+.timesIcon {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 18px;
+	color: rgba(23 32 32 / 32%);
+}
+
+.searchIcon {
+	left: 7px;
+}
+
+.timesIcon {
+	right: 7px;
+	cursor: pointer;
+
+	&:hover {
+		color: rgba(23 32 32 / 64%)
+	}
+}
