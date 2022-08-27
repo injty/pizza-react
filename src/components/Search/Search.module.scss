@@ -1,10 +1,12 @@
 .root {
 	position: relative;
+	max-width: 280px;
+	margin: 0 15px;
 }
 
 .input {
 	padding: 12px 30px;
-	width: 280px;
+	width: 100%;
 	border: 1px solid rgb(23 32 42 / 12%);
 	border-radius: 8px;
 	transition: width 150ms ease-in-out, border 150ms ease-in-out, box-shadow 250ms ease-in-out;

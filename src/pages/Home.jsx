@@ -4,34 +4,39 @@ import { Sort } from '../components/Sort'
 import { Categories } from '../components/Categories'
 import { PizzaBlock } from '../components/PizzaBlock'
 import PizzaBlockSkeleton from '../components/PizzaBlock/PizzaBlockSkeleton'
+import Pagination from '../components/Pagination'
 
 
-export default function Home() {
+export default function Home({ searchValue }) {
 	const [items, setItems] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
 
-	// sort
+	//* Sort states
 	const [categoryIndex, setCategoryIndex] = useState(0);
 	const [sortType, setSortType] = useState({
 		name: 'популярности (desc)',
 		sort: 'rating'
 	})
 
+	//* Pagination state 
+	const [currentPage, setCurrentPage] = useState('1');
+
+
 	useEffect(() => {
 		setIsLoading(true);
 
-		const category = categoryIndex > 0 ? `category=${categoryIndex}` : '';
+		const category = categoryIndex > 0 ? `&category=${categoryIndex}` : '';
 		const sorted = `&sortBy=${sortType.sort.replace("-", "")}`;
 		const order = `&order=${sortType.sort.includes('-') ? 'asc' : 'desc'}`;
 
-		fetch(`https://62ea2bcaad295463258626d6.mockapi.io/pizzas?${category}${sorted}${order}`)
+		fetch(`https://62ea2bcaad295463258626d6.mockapi.io/pizzas?page=${currentPage}&limit=4${category}${sorted}${order}&search=${searchValue}`)
 			.then((res) => res.json())
 			.then((data) => {
 				setItems(data);
 				setIsLoading(false)
 			});
-		window.scrollTo(0, 0);
-	}, [categoryIndex, sortType]);
+		// window.scrollTo(0, 0);
+	}, [categoryIndex, sortType, currentPage, searchValue]);
 
 	return (
 		<div className='container'>
@@ -43,18 +48,19 @@ export default function Home() {
 			<div className="content__items">
 				{
 					isLoading
-						? [...new Array(6)].map((_, index) => <PizzaBlockSkeleton
+						? [...new Array(4)].map((_, index) => <PizzaBlockSkeleton
 							key={index}
 						/>
 						)
-						: items.map(obj =>
-							<PizzaBlock
+						: items.map(
+							obj => <PizzaBlock
 								key={obj.id}
 								{...obj}
 							/>
 						)
 				}
 			</div>
+			<Pagination onPageChanging={num => setCurrentPage(num)} />
 		</div>
 	)
 }

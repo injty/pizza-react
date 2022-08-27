@@ -9,7 +9,9 @@ export default function Shearch({ searchValue, setSearchValue }) {
 			<input className={s.input}
 				value={searchValue} onChange={(e) => setSearchValue(e.target.value)}
 				type='text' placeholder='Введите текст поиска...' />
-			<TbX className={s.timesIcon} onClick={() => setSearchValue('')} />
+			{searchValue &&
+				<TbX className={s.timesIcon} onClick={() => setSearchValue('')} />
+			}
 		</div>
 	)
 };
