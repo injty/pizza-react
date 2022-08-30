@@ -1,8 +1,14 @@
+import { useContext } from 'react';
+
+import { SearchContext } from '../../App';
+
 import { TbSearch, TbX } from 'react-icons/tb';
 
 import s from './Search.module.scss';
 
-export default function Shearch({ searchValue, setSearchValue }) {
+export default function Search() {
+	const { searchValue, setSearchValue } = useContext(SearchContext);
+
 	return (
 		<div className={s.root}>
 			<TbSearch className={s.searchIcon} />
