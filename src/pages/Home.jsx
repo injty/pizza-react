@@ -9,7 +9,7 @@ import PizzaBlockSkeleton from '../components/PizzaBlock/PizzaBlockSkeleton'
 import Pagination from '../components/Pagination'
 
 
-export default function Home() {
+export default function Home() { 
 	const { searchValue } = useContext(SearchContext);
 
 	const [items, setItems] = useState([])

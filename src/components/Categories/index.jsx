@@ -1,6 +1,8 @@
-import React from 'react'
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setCategoryIndex } from "../../store/slices/categoryIndexSlice.js"
 
-export function Categories({ value, onChangeCategory }) {
+export function Categories() {
 	const categories = [
 		'Все',
 		'Мясные',
