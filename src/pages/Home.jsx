@@ -1,9 +1,10 @@
 import { useState, useEffect, useContext } from 'react'
-
-import { SearchContext } from '../App';
+import axios from 'axios';
 
 // store
 import { useSelector } from 'react-redux';
+
+import { SearchContext } from '../App';
 
 import { Sort } from '../components/Sort'
 import { Categories } from '../components/Categories'
@@ -26,19 +27,19 @@ export default function Home() {
 
 
 	useEffect(() => {
+
 		setIsLoading(true);
 
 		const category = categoryIndex > 0 ? `&category=${categoryIndex}` : '';
 		const sorted = `&sortBy=${sortTypeMode.replace("-", "")}`;
 		const order = `&order=${sortTypeMode.includes('-') ? 'asc' : 'desc'}`;
 
-		fetch(`https://62ea2bcaad295463258626d6.mockapi.io/pizzas?page=${currentPage}&limit=4${category}${sorted}${order}&search=${searchValue}`)
-			.then((res) => res.json())
-			.then((data) => {
-				setItems(data);
+		axios.get(`https://62ea2bcaad295463258626d6.mockapi.io/pizzas?page=${currentPage}&limit=4${category}${sorted}${order}&search=${searchValue}`)
+			.then((res) => {
+				setItems(res.data)
 				setIsLoading(false)
 			});
-		// window.scrollTo(0, 0);
+		window.scrollTo(0, 0);
 	}, [categoryIndex, sortTypeMode, currentPage, searchValue]);
 
 	return (
