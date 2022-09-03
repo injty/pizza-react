@@ -23,13 +23,13 @@ export function Categories() {
 	return (
 		<div className="categories">
 			<ul>
-				{
-					categories.map((category, i) =>
-						<li key={i} className={categoryIndex === i ? "active" : ""} onClick={() => changeCategoryId(i)}>
-							{category}
-						</li>
-					)
-				}
+				{categories.map((category, i) =>
+					<li key={i}
+						className={categoryIndex === i ? "active" : ""}
+						onClick={() => changeCategoryId(i)}>
+						{category}
+					</li>
+				)}
 			</ul>
 		</div>
 	)
