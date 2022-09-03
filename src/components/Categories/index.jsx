@@ -1,6 +1,6 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setCategoryIndex } from "../../store/slices/categoryIndexSlice.js"
+// store
+import { useSelector, useDispatch } from 'react-redux';
+import { setIndex } from '../../store/slices/categoryIndexSlice';
 
 export function Categories() {
 	const categories = [
@@ -12,18 +12,20 @@ export function Categories() {
 		'Закрытые',
 	]
 
+	const dispatch = useDispatch();
+	const categoryIndex = useSelector((state) => state.category.index);
+
+	const changeCategoryId = (i) => {
+		dispatch(setIndex(i));
+	}
+
+
 	return (
 		<div className="categories">
 			<ul>
 				{
-					categories.map((category, index) =>
-						<li
-							key={index}
-							className={
-								value === index ? "active" : ""
-							}
-							onClick={() => onChangeCategory(index)}
-						>
+					categories.map((category, i) =>
+						<li key={i} className={categoryIndex === i ? "active" : ""} onClick={() => changeCategoryId(i)}>
 							{category}
 						</li>
 					)

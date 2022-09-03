@@ -2,6 +2,9 @@ import { useState, useEffect, useContext } from 'react'
 
 import { SearchContext } from '../App';
 
+// store
+import { useSelector } from 'react-redux';
+
 import { Sort } from '../components/Sort'
 import { Categories } from '../components/Categories'
 import { PizzaBlock } from '../components/PizzaBlock'
@@ -9,14 +12,15 @@ import PizzaBlockSkeleton from '../components/PizzaBlock/PizzaBlockSkeleton'
 import Pagination from '../components/Pagination'
 
 
-export default function Home() { 
+export default function Home() {
+	const categoryIndex = useSelector((state) => state.category.index);
+
 	const { searchValue } = useContext(SearchContext);
 
 	const [items, setItems] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
 
 	//* Sort states
-	const [categoryIndex, setCategoryIndex] = useState(0);
 	const [sortType, setSortType] = useState({
 		name: 'популярности (desc)',
 		sort: 'rating'
@@ -45,7 +49,7 @@ export default function Home() {
 	return (
 		<div className='container'>
 			<div className="content__top">
-				<Categories value={categoryIndex} onChangeCategory={(index) => setCategoryIndex(index)} />
+				<Categories />
 				<Sort value={sortType.name} onSelectedSort={(obj) => setSortType(obj)} />
 			</div>
 			<h2 className="content__title">Все пиццы</h2>
