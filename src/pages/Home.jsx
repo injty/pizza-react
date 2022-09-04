@@ -22,7 +22,7 @@ export default function Home() {
 	const [items, setItems] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
 
-	//* Pagination state 
+	//! Pagination state 
 	const [currentPage, setCurrentPage] = useState('1');
 
 
