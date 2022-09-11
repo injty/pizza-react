@@ -1,7 +1,6 @@
 import React, { useState, createContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-// import components
 import Header from './components/Header';
 
 // import pages

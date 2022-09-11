@@ -12,19 +12,15 @@ import { PizzaBlock } from '../components/PizzaBlock'
 import PizzaBlockSkeleton from '../components/PizzaBlock/PizzaBlockSkeleton'
 import Pagination from '../components/Pagination'
 
-
 export default function Home() {
 	const categoryIndex = useSelector((state) => state.category.index);
 	const sortTypeMode = useSelector((state) => state.sort.sortType.mode);
+	const currentPage = useSelector((state) => state.page.pageIndex);
 
 	const { searchValue } = useContext(SearchContext);
 
 	const [items, setItems] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
-
-	//! Pagination state 
-	const [currentPage, setCurrentPage] = useState('1');
-
 
 	useEffect(() => {
 
@@ -59,7 +55,7 @@ export default function Home() {
 							{...obj} />
 					)}
 			</div>
-			<Pagination onPageChanging={num => setCurrentPage(num)} />
+			<Pagination />
 		</div>
 	)
 }
