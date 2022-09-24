@@ -1,12 +1,21 @@
 import React from 'react';
+
+// redux
+import { useDispatch } from 'react-redux';
+import { setSearch } from '../../store/slices/searchSlice';
+
+// lodash
 import debounce from 'lodash.debounce';
-import { SearchContext } from '../../App';
+
+// icons
 import { TbSearch, TbX } from 'react-icons/tb';
 
+// styles
 import s from './Search.module.scss';
 
 export default function Search() {
-	const { setSearchValue } = React.useContext(SearchContext);
+	const dispatch = useDispatch();
+
 	const [value, setValue] = React.useState('');
 
 	const inputRef = React.useRef();
@@ -18,16 +27,16 @@ export default function Search() {
 
 	const clearValue = () => {
 		setValue('');
-		setSearchValue('');
+		dispatch(setSearch(''));
 		inputRef.current.focus();
 	};
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const changeSearchValue = React.useCallback(
 		debounce((str) => {
-			setSearchValue(str);
+			dispatch(setSearch(str));
 			console.log(`${new Date().toLocaleTimeString([], { hour12: false })}, Search:, '${str}'`);
-		}, 450),
+		}, 2050),
 		[]
 	);
 
