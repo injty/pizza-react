@@ -1,9 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit';
-import category from './slices/categoryIndexSlice';
-import sort from './slices/sortSlice';
-import page from './slices/paginationSlice';
-import search from './slices/searchSlice';
-import filter from './slices/filtersSlice';
+import {configureStore} from "@reduxjs/toolkit";
+import category from "./slices/categoryIndexSlice";
+import sort from "./slices/sortSlice";
+import page from "./slices/paginationSlice";
+import search from "./slices/searchSlice";
+import cart from "./slices/cartSlice";
 
 export const store = configureStore({
 	reducer: {
@@ -11,6 +11,6 @@ export const store = configureStore({
 		sort,
 		page,
 		search,
-		filter
+		cart,
 	},
 });
