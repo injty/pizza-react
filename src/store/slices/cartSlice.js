@@ -32,7 +32,13 @@ export const cartSlice = createSlice({
     },
     takeItem: (state, action) => {
       const isHaveItem = state.items.find((item) => item.id === action.payload.id);
-      isHaveItem && isHaveItem.count--
+      if (isHaveItem) {
+        isHaveItem.count--;
+        if (isHaveItem.count < 1) {
+          state.items = state.items.filter((item) => item.id !== isHaveItem.id);
+        }
+      }
+
       state.totalPrice = state.items.reduce((acc, item) => {
         return acc + item.price * item.count;
       }, 0);
