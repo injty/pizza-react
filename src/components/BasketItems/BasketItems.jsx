@@ -26,7 +26,7 @@ export const BasketItems = () => {
           </div>
           <div className='cart__item-info'>
             <h3>{item.name}</h3>
-            <p>тонкое тесто, 26 см.</p>
+            <p>{item.type}, {item.size} см.</p>
           </div>
           <div className='cart__item-count'>
             <div onClick={() => takeOnePizza(item)} className='button button--outline button--circle cart__item-count-minus'>

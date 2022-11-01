@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { BasketItems } from "../components/BasketItems/BasketItems";
+import { EmptyCart } from "../components/EmptyCart";
 
 import { useSelector, useDispatch } from "react-redux";
 import { clearItems } from "../store/slices/cartSlice";
@@ -11,11 +12,15 @@ export default function Cart() {
   const { totalPrice, totalCount } = useSelector((state) => state.cart);
   // const items = useSelector((state) => state.cart.items);
 
-  React.useEffect(() => {}, []);
-
   const clearBasket = () => {
-    dispatch(clearItems());
+    if (window.confirm("Очистить корзину?")) {
+      dispatch(clearItems());
+    }
   };
+
+  if (!totalCount) {
+    return <EmptyCart />;
+  }
 
   return (
     <div className='container container--cart'>
