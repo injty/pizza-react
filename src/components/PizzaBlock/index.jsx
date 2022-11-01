@@ -20,14 +20,14 @@ export function PizzaBlock({ imageUrl, name, types, sizes, price, id }) {
   const [activeSize, setActiveSize] = React.useState(0);
 
   // pizza counter
-  const onClickCounterChange = (e) => {
+  const onClickCounterChange = () => {
     const item = {
       name,
       id,
       price,
       imageUrl,
       type: typeNames[activeType],
-      size: activeSize,
+      size: sizes[activeSize],
     };
     dispatch(addItem(item));
   };
@@ -48,7 +48,7 @@ export function PizzaBlock({ imageUrl, name, types, sizes, price, id }) {
           <ul>
             {sizes.map((size, i) => (
               <li key={size} className={activeSize === i ? "active" : ""} onClick={() => setActiveSize(i)}>
-                {size} sm.
+                {size} см.
               </li>
             ))}
           </ul>
