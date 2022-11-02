@@ -1,38 +1,47 @@
-import React from 'react';
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
 
 // store
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
-import { Sort } from '../components/Sort';
-import { Categories } from '../components/Categories';
-import { PizzaBlock } from '../components/PizzaBlock';
-import PizzaBlockSkeleton from '../components/PizzaBlock/PizzaBlockSkeleton';
-import Pagination from '../components/Pagination';
+import { Sort } from "../components/Sort";
+import { Categories } from "../components/Categories";
+import { PizzaBlock } from "../components/PizzaBlock";
+import PizzaBlockSkeleton from "../components/PizzaBlock/PizzaBlockSkeleton";
+import Pagination from "../components/Pagination";
 
 export default function Home() {
   const categoryIndex = useSelector((state) => state.category.index);
   const sortTypeMode = useSelector((state) => state.sort.sortType.mode);
   const currentPage = useSelector((state) => state.page.pageIndex);
+
   const searchValue = useSelector((state) => state.search.value);
 
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
-  React.useEffect(() => {
+  const fetchPizzas = async () => {
     setIsLoading(true);
-    const category = categoryIndex > 0 ? `&category=${categoryIndex}` : '';
-    const sorted = `&sortBy=${sortTypeMode.replace('-', '')}`;
-    const order = `&order=${sortTypeMode.includes('-') ? 'asc' : 'desc'}`;
-    const search = searchValue ? `&search=${searchValue}` : '';
+    const category = categoryIndex > 0 ? `&category=${categoryIndex}` : "";
+    const sorted = `&sortBy=${sortTypeMode.replace("-", "")}`;
+    const order = `&order=${sortTypeMode.includes("-") ? "asc" : "desc"}`;
+    const search = searchValue ? `&search=${searchValue}` : "";
 
-    axios
-      .get(`https://62ea2bcaad295463258626d6.mockapi.io/pizzas?page=${currentPage}&limit=4${category}${sorted}${order}${search}`)
-      .then((res) => {
-        setItems(res.data);
-        setIsLoading(false);
-      });
-    window.scrollTo(0, 0);
+    try {
+      const pizzas = await axios.get(
+        `https://62ea2bcaad295463258626d6.mockapi.io/pizzas?page=${currentPage}&limit=4${category}${sorted}${order}${search}`
+      );
+      setItems(pizzas.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+      window.scrollTo(0, 0);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchPizzas();
   }, [categoryIndex, sortTypeMode, currentPage, searchValue]);
 
   return (
