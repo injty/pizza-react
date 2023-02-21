@@ -10,7 +10,7 @@ import NotFound from './pages/NotFound'
 
 import './scss/app.scss'
 
-            export default function App() {
+export const App = () => {
   return (
     <div className='wrapper'>
       <Header />

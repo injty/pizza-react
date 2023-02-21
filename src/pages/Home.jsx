@@ -1,38 +1,34 @@
-import React from 'react';
-import axios from 'axios';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchPizzas } from "../store/slices/fetchPizzasSlice";
 
-// store
-import { useSelector } from 'react-redux';
-
-import { Sort } from '../components/Sort';
-import { Categories } from '../components/Categories';
-import { PizzaBlock } from '../components/PizzaBlock';
-import PizzaBlockSkeleton from '../components/PizzaBlock/PizzaBlockSkeleton';
-import Pagination from '../components/Pagination';
+import { Sort } from "../components/Sort";
+import { Categories } from "../components/Categories";
+import { PizzaBlock } from "../components/PizzaBlock";
+import PizzaBlockSkeleton from "../components/PizzaBlock/PizzaBlockSkeleton";
+import Pagination from "../components/Pagination";
 
 export default function Home() {
+  const dispatch = useDispatch();
+
   const categoryIndex = useSelector((state) => state.category.index);
   const sortTypeMode = useSelector((state) => state.sort.sortType.mode);
   const currentPage = useSelector((state) => state.page.pageIndex);
   const searchValue = useSelector((state) => state.search.value);
+  const { items, status } = useSelector((state) => state.fetchPizzas);
 
-  const [items, setItems] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const getPizzas = async () => {
+    const category = categoryIndex > 0 ? `&category=${categoryIndex}` : "";
+    const sorted = `&sortBy=${sortTypeMode.replace("-", "")}`;
+    const order = `&order=${sortTypeMode.includes("-") ? "asc" : "desc"}`;
+    const search = searchValue ? `&search=${searchValue}` : "";
+
+    dispatch(fetchPizzas({ currentPage, category, sorted, order, search }));
+    window.scrollTo(0, 0);
+  };
 
   React.useEffect(() => {
-    setIsLoading(true);
-    const category = categoryIndex > 0 ? `&category=${categoryIndex}` : '';
-    const sorted = `&sortBy=${sortTypeMode.replace('-', '')}`;
-    const order = `&order=${sortTypeMode.includes('-') ? 'asc' : 'desc'}`;
-    const search = searchValue ? `&search=${searchValue}` : '';
-
-    axios
-      .get(`https://62ea2bcaad295463258626d6.mockapi.io/pizzas?page=${currentPage}&limit=4${category}${sorted}${order}${search}`)
-      .then((res) => {
-        setItems(res.data);
-        setIsLoading(false);
-      });
-    window.scrollTo(0, 0);
+    getPizzas();
   }, [categoryIndex, sortTypeMode, currentPage, searchValue]);
 
   return (
@@ -43,9 +39,17 @@ export default function Home() {
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>
-        {isLoading
-          ? [...new Array(4)].map((_, index) => <PizzaBlockSkeleton key={index} />)
-          : items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
+        {
+          // I'm very lazy, becouse I don't want to refactor 😒
+          status === 'error'
+            ? (<div>
+              <h2>Error</h2>
+              <p>Something went wrong</p>
+            </div>) :
+            (status === 'loading'
+              ? [...new Array(3)].map((_, index) => <PizzaBlockSkeleton key={index} />)
+              : items.map((obj) => <PizzaBlock key={obj.id} {...obj} />))
+        }
       </div>
       <Pagination />
     </div>

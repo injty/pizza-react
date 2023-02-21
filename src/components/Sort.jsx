@@ -1,6 +1,4 @@
 import React from "react";
-
-//store
 import { useSelector, useDispatch } from "react-redux";
 import { setSortType } from "../store/slices/sortSlice";
 
@@ -27,8 +25,8 @@ export function Sort() {
   const sortRef = React.useRef();
 
   React.useEffect(() => {
-    const closeEvent = (event) => {
-      if (!event.path.includes(sortRef.current)) {
+    function closeEvent(event) {
+      if (!event.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
     };
