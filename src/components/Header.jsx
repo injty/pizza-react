@@ -1,18 +1,9 @@
 import React from "react";
-
-// store
 import { useSelector } from "react-redux";
-
-// router
 import { Link } from "react-router-dom";
 
-// components
 import Search from "./Search";
-
-// images
 import logotype from "../assets/img/pizza-logo.svg";
-
-// icons
 import { TbShoppingCart } from "react-icons/tb";
 
 export default function Header() {

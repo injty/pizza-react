@@ -9,15 +9,24 @@ import { TbPlus } from "react-icons/tb";
 
 const typeNames = ["тонкое", "традиционное"];
 
-export function PizzaBlock({ imageUrl, name, types, sizes, price, id }) {
+interface IPizzaBlock {
+  imageUrl: string;
+  name: string;
+  types: [];
+  sizes: [];
+  price: string;
+  id: string;
+}
+
+export const PizzaBlock = ({ imageUrl, name, types, sizes, price, id }: IPizzaBlock) => {
   const dispatch = useDispatch();
-  const items = useSelector((state) => state.cart.items);
+  const { items } = useSelector((state: { cart: { items: [] } }) => state.cart);
 
   // types
-  const [activeType, setActiveType] = React.useState(0);
+  const [activeType, setActiveType] = React.useState<number>(0);
 
   // sizes
-  const [activeSize, setActiveSize] = React.useState(0);
+  const [activeSize, setActiveSize] = React.useState<number>(0);
 
   // pizza counter
   const onClickCounterChange = () => {
@@ -58,10 +67,10 @@ export function PizzaBlock({ imageUrl, name, types, sizes, price, id }) {
           <div className='button button--outline button--add' onClick={onClickCounterChange}>
             <TbPlus />
             <span>Добавить</span>
-            {items.map((el) => id === el.id && <i key={el.id}>{el.count}</i>)}
+            {items && items.map((el: { id: string; count: number }) => id === el.id && <i key={el.id}>{el.count}</i>)}
           </div>
         </div>
       </div>
     </div>
   );
-}
+};

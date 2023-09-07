@@ -29,6 +29,7 @@ export default function Home() {
 
   React.useEffect(() => {
     getPizzas();
+    // eslint-disable-next-line
   }, [categoryIndex, sortTypeMode, currentPage, searchValue]);
 
   return (
